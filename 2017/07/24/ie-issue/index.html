@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="IE," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="万恶的 IE，总是存在奇怪特有的问题，本文用于收集整理开发中遇到的与 IE 相关的问题  在 IE 11 浏览器上 FontIcon 图标不显示在 IE11 会下载 .ttf/.woff 字体文件， 通过 Network 我们可以看到字体文件 response headers 中有一个 Pragma：no-cache,由于 IE 似乎有缓存和字体的问题，所有导致图标不能正常显示。所以删除 WEB">
+<meta name="keywords" content="IE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IE 常见问题">
+<meta property="og:url" content="http://blog.rsuitejs.com/2017/07/24/ie-issue/index.html">
+<meta property="og:site_name" content="Hypers 前端团队博客">
+<meta property="og:description" content="万恶的 IE，总是存在奇怪特有的问题，本文用于收集整理开发中遇到的与 IE 相关的问题  在 IE 11 浏览器上 FontIcon 图标不显示在 IE11 会下载 .ttf/.woff 字体文件， 通过 Network 我们可以看到字体文件 response headers 中有一个 Pragma：no-cache,由于 IE 似乎有缓存和字体的问题，所有导致图标不能正常显示。所以删除 WEB">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-03T09:48:29.528Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IE 常见问题">
+<meta name="twitter:description" content="万恶的 IE，总是存在奇怪特有的问题，本文用于收集整理开发中遇到的与 IE 相关的问题  在 IE 11 浏览器上 FontIcon 图标不显示在 IE11 会下载 .ttf/.woff 字体文件， 通过 Network 我们可以看到字体文件 response headers 中有一个 Pragma：no-cache,由于 IE 似乎有缓存和字体的问题，所有导致图标不能正常显示。所以删除 WEB">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.rsuitejs.com/2017/07/24/ie-issue/"/>
+
+
+
+
+
+  <title>IE 常见问题 | Hypers 前端团队博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hypers 前端团队博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.rsuitejs.com/2017/07/24/ie-issue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hypers">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/hypers_logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hypers 前端团队博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">IE 常见问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T00:00:00+00:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>万恶的 IE，总是存在奇怪特有的问题，本文用于收集整理开发中遇到的与 IE 相关的问题</p>
+</blockquote>
+<h2 id="在-IE-11-浏览器上-FontIcon-图标不显示"><a href="#在-IE-11-浏览器上-FontIcon-图标不显示" class="headerlink" title="在 IE 11 浏览器上 FontIcon 图标不显示"></a>在 IE 11 浏览器上 FontIcon 图标不显示</h2><p>在 IE11 会下载 .ttf/.woff 字体文件， 通过 Network 我们可以看到字体文件 <code>response headers</code> 中有一个 <code>Pragma：no-cache</code>,由于 IE 似乎有缓存和字体的问题，所有导致图标不能正常显示。所以删除 WEB 服务(Nginx..)中的 <code>Pragma：no-cache</code> 和 <code>Cache-Control：no-store</code> 就能正常访问。</p>
+<p>参考 <a href="https://github.com/FortAwesome/Font-Awesome/issues/6454" target="_blank" rel="external">IE and Cache-Control</a></p>
+<h2 id="svg-在-IE-中自适应宽度"><a href="#svg-在-IE-中自适应宽度" class="headerlink" title="svg 在 IE 中自适应宽度"></a>svg 在 IE 中自适应宽度</h2><p>svg 在其他浏览器中如 <code>chrome</code> 中，会自动随着父级容器的宽度自营式应，无需单独设置宽度和高度。但是在 IE 中则不起作用。</p>
+<p><strong>解决办法</strong></p>
+<p>在 <code>svg</code> 节点添加 <code>style=&quot;width:100%;height:100%&quot;</code> 属性和 <code>preserveAspectRatio=&quot;xMidYmin slice&quot;</code>，这样就能在 IE 中也实现 SVG 自适应宽度。完整代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;svg version=&quot;1.1&quot; id=&quot;图层_1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; x=&quot;0px&quot; y=&quot;0px&quot; width=&quot;100%&quot; height=&quot;100%&quot;</div><div class="line">	 viewBox=&quot;-125 202 359.9 389&quot; style=&quot;width: 100%;height: 100%;overflow:auto&quot; xml:space=&quot;preserve&quot;  preserveAspectRatio=&quot;xMidYMin slice&quot;&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="IE-中如何更新-svg-text-节点的内容"><a href="#IE-中如何更新-svg-text-节点的内容" class="headerlink" title="IE 中如何更新 svg text 节点的内容"></a>IE 中如何更新 svg text 节点的内容</h2><p>JavaScript 可以像操作 DOM 节点那样来操作 svg style 属性和内容。比如可以通过 <code>document.querySelector(&#39;#selectorName&#39;).style.display=&#39;none&#39;</code> 来设置显示或隐藏某个节点。<br>此外还可以通过 <code>document.querySelector(&#39;#selectorName&#39;).innerText=&#39;newText&#39;</code> 可以设置 <code>text</code> 节点的内容。</p>
+<p>但是在 IE，<code>element.innerText</code> 和 <code>element.innerHTML</code> 都不起作用。</p>
+<p><strong>解决办法</strong></p>
+<p>使用 <code>element.textContent</code> 代替 <code>element.innerText</code>。这样就可以在 IE 通过 JavaScript 来操作 <code>text</code> 节点的内容。</p>
+<blockquote>
+<p>关于 <code>element.textContent</code> 的介绍及、与<code>innerText</code> 和 <code>innerHTML</code> 的区别，可以参考：<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent" target="_blank" rel="external">Node.textContent</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IE/" rel="tag"># IE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/22/react-permission/" rel="next" title="React 项目中的权限控制需要做哪些事情？">
+                <i class="fa fa-chevron-left"></i> React 项目中的权限控制需要做哪些事情？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/31/modern-front-end-develop/" rel="prev" title="从MVC到MVVM——数据与视图关系的演进">
+                从MVC到MVVM——数据与视图关系的演进 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/hypers_logo.png"
+               alt="Hypers" />
+          <p class="site-author-name" itemprop="name">Hypers</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在-IE-11-浏览器上-FontIcon-图标不显示"><span class="nav-number">1.</span> <span class="nav-text">在 IE 11 浏览器上 FontIcon 图标不显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#svg-在-IE-中自适应宽度"><span class="nav-number">2.</span> <span class="nav-text">svg 在 IE 中自适应宽度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IE-中如何更新-svg-text-节点的内容"><span class="nav-number">3.</span> <span class="nav-text">IE 中如何更新 svg text 节点的内容</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hypers</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
